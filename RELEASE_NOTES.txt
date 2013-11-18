@@ -1,0 +1,17 @@
+OVERVIEW
+-----------------------------------------
+metdata API
+
+The metadata API provides an infrastructure for templating metadata for any system and validating metadata against those templates.
+
+VERSION: 1.0 (Released 11/22/2013)
+------------------------------------------
+FEATURES:
+
+- REST API with following resources:
+  - template
+  - data
+
+- Scripts
+  - md-validate-template
+  - md-validate-metadata
