@@ -20,8 +20,6 @@ default: build-scripts
 
 build-scripts:
 	-mkdir scripts
-	@echo "retrieving metadata tools"
-	-rm -rf tools
-	git submodule init tools
-	git submodule update tools
-	cd tools; git pull origin master
+	@echo "auto-generating metadata scripts"
+	generate_commandline -template $(TOP_DIR)/template/communities.template -config config/commandline.conf -outdir scripts
+	@echo "done building command line scripts"
