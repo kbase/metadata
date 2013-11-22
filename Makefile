@@ -9,11 +9,17 @@ SERVICE_NAME = metadata
 SERVICE_PORT = 7085
 SERVICE_URL = http://localhost
 SERVICE_DIR = $(TARGET)/services/$(SERVICE_NAME)
+ID_SERVER_URL = http://kbase.us/services/idserver
+SHOCK_URL = http://140.221.76.25:80
+DEFAULT_TEMPLATE_NODE = 277819fe-e61e-4bd6-a09a-b336bce0c359
 
 TPAGE_CGI_ARGS = --define perl_path=$(PERL_PATH) --define perl_lib=$(SERVICE_DIR)/api
 TPAGE_LIB_ARGS = --define target=$(TARGET) \
-		 --define metadata_name=$(SERVICE_NAME) \
-		 --define api_dir=$(SERVICE_DIR)/api
+		 --define service_name=$(SERVICE_NAME) \
+		 --define api_dir=$(SERVICE_DIR)/api \
+		 --define id_server_url=$(ID_SERVER_URL) \
+		 --define shock_url=$(SHOCK_URL) \
+		 --define default_template_node=$(DEFAULT_TEMPLATE_NODE)
 TPAGE := $(shell which tpage)
 
 ### Default make target
