@@ -1,0 +1,52 @@
+NameVirtualHost *:[% metadata_api_port %]
+Listen [% metadata_api_port %]
+
+<VirtualHost *:80>
+
+    DocumentRoot /usr/share/doc
+    <Directory />
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+</VirtualHost>
+
+<VirtualHost *:[% metadata_api_port %]>
+	ServerAdmin webmaster@localhost
+
+	<Files ~ "\.(pl|cgi)$">
+        Options +ExecCGI
+    </Files>
+
+	DocumentRoot [% metadata_dir %]
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride None
+	</Directory>
+
+	ScriptAlias /cgi-bin/ [% metadata_dir %]
+	<Directory "[% metadata_dir %]">
+		AllowOverride None
+		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+		AddHandler cgi-script .pl .cgi
+		Order allow,deny
+		Allow from all
+	</Directory>
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	LogLevel warn
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    Alias /doc/ "/usr/share/doc/"
+    <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+</VirtualHost>

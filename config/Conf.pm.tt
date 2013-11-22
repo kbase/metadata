@@ -1,0 +1,20 @@
+package Conf;
+
+use Config::Tiny;
+
+$url_base = "";
+$service_name = "[% service_name %]";
+$api_resource_dir  = "resources";
+$api_resource_path = "[% api_dir %]/".$api_resource_dir;
+
+if (-s '[% target %]/deployment.cfg') {
+    $kb_cfg = Config::Tiny->read('[% target %]/deployment.cfg');
+    if ($kb_cfg && exists($kb_cfg->{$service_name})) {
+        $cfg = $kb_cfg->{$service_name};
+        if (exists($cfg->{'URL_BASE'})) {
+            $url_base = $cfg->{'URL_BASE'};
+        }
+    }
+}
+
+1;
