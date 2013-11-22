@@ -4,6 +4,7 @@ DEPLOY_RUNTIME ?= /kb/runtime
 TARGET ?= /kb/deployment
 -include $(TOOLS_DIR)/Makefile.common
 
+PERL_PATH = $(DEPLOY_RUNTIME)/bin/perl
 SERVICE_NAME = metadata
 SERVICE_PORT = 7085
 SERVICE_URL = http://localhost
@@ -20,12 +21,22 @@ default: build-scripts
 
 all: deploy
 
+clean:
+	-rm -rf support
+	-rm -rf scripts
+	-rm -rf docs
+	-rm -rf lib
+	-rm -rf api
+
+uninstall: clean
+	-rm -rf $(SERVICE_DIR)
+
 deploy: deploy-cfg | deploy-service deploy-client deploy-docs
 	@echo "stoping apache ..."
-	apachectl stop
+	service apache2 stop
 
 build-scripts:
-	-mkdir scripts
+	-mkdir -p scripts
 	@echo "auto-generating metadata scripts"
 	generate_commandline -template $(TOP_DIR)/template/communities.template -config config/commandline.conf -outdir scripts
 	@echo "done building command line scripts"
@@ -39,7 +50,8 @@ deploy-service: build-service
 	chmod +x $(SERVICE_DIR)/stop_service
 	$(TPAGE) --define metadata_dir=$(SERVICE_DIR)/api --define metadata_api_port=$(SERVICE_PORT) config/apache.conf.tt > /etc/apache2/sites-available/default
 	@echo "restarting apache ..."
-	apachectl restart
+	service nginx stop
+	service apache2 restart
 	@echo "done executing deploy-service target"
 
 build-service:
@@ -59,8 +71,8 @@ deploy-client: deploy-scripts | build-libs deploy-libs
 	@echo "client tools deployed"
 
 build-libs:
-	-mkdir lib
-	-mkdir docs
+	-mkdir -p lib
+	-mkdir -p docs
 	api2js -url $(SERVICE_URL):$(SERVICE_PORT)/api.cgi -outfile docs/metadata.json
 	definition2typedef -json docs/metadata.json -typedef docs/metadata.typedef -service Metadata
 	compile_typespec --impl Metadata --js Metadata --py Metadata docs/metadata.typedef lib
@@ -74,3 +86,5 @@ deploy-docs: build-docs
 	mkdir -p $(SERVICE_DIR)/webroot
 	cp docs/*.html $(SERVICE_DIR)/webroot/.
 	cp docs/*.html $(SERVICE_DIR)/api/.
+
+-include $(TOOLS_DIR)/Makefile.common.rules
