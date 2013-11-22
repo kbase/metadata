@@ -11,7 +11,7 @@ SERVICE_URL = http://localhost
 SERVICE_DIR = $(TARGET)/services/$(SERVICE_NAME)
 ID_SERVER_URL = http://kbase.us/services/idserver
 SHOCK_URL = http://140.221.43.49:80
-DEFAULT_TEMPLATE_NODE = 277819fe-e61e-4bd6-a09a-b336bce0c359
+DEFAULT_TEMPLATE_NODE = 7cae0733-b777-42cb-b305-aa8a8eca3b90
 
 TPAGE_CGI_ARGS = --define perl_path=$(PERL_PATH) --define perl_lib=$(SERVICE_DIR)/api
 TPAGE_LIB_ARGS = --define target=$(TARGET) \
