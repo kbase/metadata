@@ -11,14 +11,16 @@ SERVICE_URL = http://localhost
 SERVICE_DIR = $(TARGET)/services/$(SERVICE_NAME)
 ID_SERVER_URL = http://kbase.us/services/idserver
 SHOCK_URL = http://140.221.43.49:80
-DEFAULT_TEMPLATE_NODE = 7cae0733-b777-42cb-b305-aa8a8eca3b90
+DEFAULT_MD_NODE = d24073ea-9198-4a56-9901-215fcc310eaf
+DEFAULT_MD_TEMPLATE_NODE = 7cae0733-b777-42cb-b305-aa8a8eca3b90
 
 TPAGE_CGI_ARGS = --define perl_path=$(PERL_PATH) --define perl_lib=$(SERVICE_DIR)/api
 TPAGE_LIB_ARGS = --define target=$(TARGET) \
 		 --define api_dir=$(SERVICE_DIR)/api \
 		 --define id_server_url=$(ID_SERVER_URL) \
 		 --define shock_url=$(SHOCK_URL) \
-		 --define default_template_node=$(DEFAULT_TEMPLATE_NODE)
+		 --define default_md_node=$(DEFAULT_MD_NODE) \
+		 --define default_md_template_node=$(DEFAULT_MD_TEMPLATE_NODE)
 # Need to add this back in once the service is deployed into production
 #		 --define service_name=$(SERVICE_NAME) 
 TPAGE := $(shell which tpage)
