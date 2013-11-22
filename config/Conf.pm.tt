@@ -6,6 +6,9 @@ $url_base = "";
 $service_name = "[% service_name %]";
 $api_resource_dir  = "resources";
 $api_resource_path = "[% api_dir %]/".$api_resource_dir;
+$idserver_url = "[% id_server_url %]";
+$shock_url = "[% shock_url %]";
+$mgrast_md_template_node_id = "[% default_template_node %]";
 
 if (-s '[% target %]/deployment.cfg') {
     $kb_cfg = Config::Tiny->read('[% target %]/deployment.cfg');
